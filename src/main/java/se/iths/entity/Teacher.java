@@ -1,14 +1,12 @@
 package se.iths.entity;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-
-public class Student {
+public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,27 +14,30 @@ public class Student {
 
     @NotEmpty
     private String firstName;
-    @NotEmpty
-    private String lastname;
-    @NotEmpty
+    private String lastName;
     private String email;
-    private String phoneNumber;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
     private Set<Subject> subjects = new HashSet<>();
 
-    public Student(@NotEmpty String firstName, @NotEmpty  String lastName, @NotEmpty String email) {
+    public Teacher(@NotEmpty String firstName, String lastName, String email){
         this.firstName = firstName;
-        this.lastname = lastName;
+        this.lastName = lastName;
         this.email = email;
     }
 
-    public Student() {
+    public Teacher(){
     }
 
-    public void addSubject(Subject subject) {
+    public void addSubject(Subject subject){
         subjects.add(subject);
-        subject.getStudents().add(this);
+        subject.setTeacher(this);
+    }
+
+    public void removeSubject(Subject subject){
+        subjects.remove(subject);
+        subject.setTeacher(null);
     }
 
     public Long getId() {
@@ -56,11 +57,11 @@ public class Student {
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
     }
 
     public String getEmail() {
@@ -71,11 +72,5 @@ public class Student {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 }
