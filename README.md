@@ -17,7 +17,7 @@ GET all teachers `/se.iths/api/v1/teacher/getall`
 
 ## POST
 
-###Creation
+### Creation
 POST new student   `/se.iths/api/v1/student/new`
 
 Json data for student creation is formatted according to the following template:
@@ -51,7 +51,7 @@ POST new Subject `/se.iths/api/v1/subject/new`
 ```
     "subjectName":"Art"
 ```
-###Misc POST
+### Misc POST
 
 To add a teacher to a subject, POST to `/se.iths/api/v1/subject/{subjectId}/addTeacher/{studentId}`
 
